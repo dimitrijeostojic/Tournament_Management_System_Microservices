@@ -65,6 +65,9 @@ public sealed class Match : Entity
         if (homePoints < 0 || awayPoints < 0)
             throw new InvalidOperationException("Points cannot be negative.");
 
+        if (homePoints == awayPoints)
+            throw new InvalidOperationException("A basketball match cannot end in a draw.");
+
         if (Status is not MatchStatus.Scheduled)
             throw new InvalidOperationException("Result can only be recorded for Scheduled matches.");
 
@@ -111,22 +114,19 @@ public sealed class Match : Entity
 
         var homeWin = homeFor > homeAgainst;
         var awayWin = awayFor > awayAgainst;
-        var draw = homeFor == homeAgainst;
 
         return new MatchStandingsDelta(
             HomeTeamPublicId: HomeTeamPublicId,
             AwayTeamPublicId: AwayTeamPublicId,
             HomePlayed: 1,
             HomeWins: homeWin ? 1 : 0,
-            HomeDraws: draw ? 1 : 0,
-            HomeLosses: (!homeWin && !draw) ? 1 : 0,
+            HomeLosses: homeWin ? 0 : 1,
             HomePointsFor: homeFor,
             HomePointsAgainst: homeAgainst,
             HomeStandingPoints: homeWin ? WinStandingPoints : LossStandingPoints,
             AwayPlayed: 1,
             AwayWins: awayWin ? 1 : 0,
-            AwayDraws: draw ? 1 : 0,
-            AwayLosses: (!awayWin && !draw) ? 1 : 0,
+            AwayLosses: awayWin ? 0 : 1,
             AwayPointsFor: awayFor,
             AwayPointsAgainst: awayAgainst,
             AwayStandingPoints: awayWin ? WinStandingPoints : LossStandingPoints
@@ -143,8 +143,8 @@ public sealed class Match : Entity
 public sealed record MatchStandingsDelta(
     Guid HomeTeamPublicId,
     Guid AwayTeamPublicId,
-    int HomePlayed, int HomeWins, int HomeDraws, int HomeLosses,
+    int HomePlayed, int HomeWins, int HomeLosses,
     int HomePointsFor, int HomePointsAgainst, int HomeStandingPoints,
-    int AwayPlayed, int AwayWins, int AwayDraws, int AwayLosses,
+    int AwayPlayed, int AwayWins, int AwayLosses,
     int AwayPointsFor, int AwayPointsAgainst, int AwayStandingPoints
 );

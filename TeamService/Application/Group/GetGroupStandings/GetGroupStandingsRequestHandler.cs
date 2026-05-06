@@ -34,7 +34,6 @@ public sealed class GetGroupStandingsRequestHandler(
                 TeamName = t.TeamName,
                 Played = standing?.Played ?? 0,
                 Wins = standing?.Wins ?? 0,
-                Draws = standing?.Draws ?? 0,
                 Losses = standing?.Losses ?? 0,
                 PointsFor = standing?.PointsFor ?? 0,
                 PointsAgainst = standing?.PointsAgainst ?? 0,

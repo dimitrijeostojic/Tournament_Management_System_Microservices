@@ -6,7 +6,6 @@ public sealed class StandingDto
     public string TeamName { get; set; } = string.Empty;
     public int Played { get; set; }
     public int Wins { get; set; }
-    public int Draws { get; set; }
     public int Losses { get; set; }
     public int PointsFor { get; set; }
     public int PointsAgainst { get; set; }

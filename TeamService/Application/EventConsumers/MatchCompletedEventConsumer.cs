@@ -17,13 +17,13 @@ public sealed class MatchCompletedEventConsumer(
 
         await ApplyStandingsAsync(
             evt.HomeTeamPublicId,
-            evt.HomePlayed, evt.HomeWins, evt.HomeDraws, evt.HomeLosses,
+            evt.HomePlayed, evt.HomeWins, evt.HomeLosses,
             evt.HomePointsFor, evt.HomePointsAgainst, evt.HomeStandingPoints,
             context.CancellationToken);
 
         await ApplyStandingsAsync(
             evt.AwayTeamPublicId,
-            evt.AwayPlayed, evt.AwayWins, evt.AwayDraws, evt.AwayLosses,
+            evt.AwayPlayed, evt.AwayWins, evt.AwayLosses,
             evt.AwayPointsFor, evt.AwayPointsAgainst, evt.AwayStandingPoints,
             context.CancellationToken);
 
@@ -32,7 +32,7 @@ public sealed class MatchCompletedEventConsumer(
 
     private async Task ApplyStandingsAsync(
         Guid teamPublicId,
-        int played, int wins, int draws, int losses,
+        int played, int wins, int losses,
         int pointsFor, int pointsAgainst, int standingPoints,
         CancellationToken cancellationToken)
     {
@@ -44,6 +44,6 @@ public sealed class MatchCompletedEventConsumer(
             await standingRepository.AddAsync(standing, cancellationToken);
         }
 
-        standing.Apply(played, wins, draws, losses, pointsFor, pointsAgainst, standingPoints);
+        standing.Apply(played, wins, losses, pointsFor, pointsAgainst, standingPoints);
     }
 }

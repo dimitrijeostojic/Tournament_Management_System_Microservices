@@ -21,9 +21,6 @@ internal sealed class TeamStandingEntityConfiguration
         builder.Property(c => c.Wins)
             .IsRequired()
             .HasDefaultValue(0);
-        builder.Property(c => c.Draws)
-            .IsRequired()
-            .HasDefaultValue(0);
         builder.Property(c => c.Losses)
             .IsRequired()
             .HasDefaultValue(0);
