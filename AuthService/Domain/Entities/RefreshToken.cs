@@ -5,17 +5,12 @@ namespace Domain.Entities;
 public sealed class RefreshToken
 {
     public int Id { get; private set; }
-    public string Token { get; private set; } = string.Empty;
-    public string UserId { get; private set; } = string.Empty;
-    public User User { get; private set; } = null!;
+    public string? Token { get; private set; }
+    public string? UserId { get; private set; }
     public DateTime ExpiresAt { get; private set; }
     public bool IsRevoked { get; private set; }
     public DateTime CreatedAt { get; private set; }
-
-    private RefreshToken()
-    {
-
-    }
+    public User? User { get; private set; }
 
     public static RefreshToken Create(string userId)
     {

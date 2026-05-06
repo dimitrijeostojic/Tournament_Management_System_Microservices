@@ -17,7 +17,7 @@ public sealed class KnockoutMatch : Entity
     public Guid? WinnerPublicId { get; private set; }
 
     // Navigation property — KnockoutBracket je u istom servisu (FK je BracketId → KnockoutBracket.Id)
-    public KnockoutBracket Bracket { get; private set; } = null!;
+    public KnockoutBracket? Bracket { get; private set; }
 
 
     public static KnockoutMatch Create(KnockoutRound round, int matchOrder)
