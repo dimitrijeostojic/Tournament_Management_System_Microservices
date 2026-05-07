@@ -29,16 +29,16 @@ public sealed class LoginRequestHandler(
             return Result<LoginResponse>.Failure(ApplicationErrors.InvalidCredentials);
         }
 
-        if (user.TwoFactorEnabled)
-        {
-            return Result<LoginResponse>.Success(
-                new LoginResponse(null, null, RequiresTwoFactor: true, UserId: user.Id));
-        }
-
         var roles = await _userManager.GetRolesAsync(user);
         if (!roles.Contains(Core.Roles.Admin) && !roles.Contains(Core.Roles.Manager))
         {
             return Result<LoginResponse>.Failure(ApplicationErrors.UnauthorizedRole);
+        }
+
+        if (user.TwoFactorEnabled)
+        {
+            return Result<LoginResponse>.Success(
+                new LoginResponse(null, null, RequiresTwoFactor: true, UserId: user.Id));
         }
 
         var accessToken = await _jwtTokenRepository.GenerateTokenAsync(user, roles);

@@ -39,6 +39,8 @@ public sealed class VerifyTwoFactorRequestHandler(
             return Result<VerifyTwoFactorResponse>.Failure(ApplicationErrors.InvalidTwoFactorCode);
 
         var roles = await _userManager.GetRolesAsync(user);
+        if (!roles.Contains(Roles.Admin) && !roles.Contains(Roles.Manager))
+            return Result<VerifyTwoFactorResponse>.Failure(ApplicationErrors.UnauthorizedRole);
         var accessToken = await _jwtTokenRepository.GenerateTokenAsync(user, roles);
         var refreshToken = Domain.Entities.RefreshToken.Create(user.Id);
         await _refreshTokenRepository.AddAsync(refreshToken, cancellationToken);
