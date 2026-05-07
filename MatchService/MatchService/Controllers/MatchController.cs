@@ -38,6 +38,7 @@ public class MatchController(IMediator mediator) : ControllerBase
         return result.ToActionResult();
     }
 
+    [AllowAnonymous]
     [HttpGet("{publicId:guid}")]
     public async Task<IActionResult> GetMatchByPublicId([FromRoute] Guid publicId, CancellationToken cancellationToken)
     {
@@ -55,6 +56,7 @@ public class MatchController(IMediator mediator) : ControllerBase
         return result.ToActionResult();
     }
 
+    [AllowAnonymous]
     [HttpGet]
     public async Task<IActionResult> GetAll([FromQuery] GetMatchesRequest request, CancellationToken cancellationToken)
     {
@@ -62,6 +64,7 @@ public class MatchController(IMediator mediator) : ControllerBase
         return result.ToActionResult();
     }
 
+    [AllowAnonymous]
     [HttpGet("knockout/brackets/{id:guid}")]
     public async Task<IActionResult> GetKnockoutBracket([FromRoute] Guid id, CancellationToken cancellationToken)
     {

@@ -16,4 +16,5 @@ public static class ApplicationErrors
     public static readonly Error InvalidRefreshToken = new("Auth.InvalidRefreshToken", "Refresh token is invalid or has expired.");
     public static readonly Error InvalidTwoFactorCode = new("Auth.InvalidTwoFactorCode", "The two-factor authentication code is invalid.");
     public static readonly Error TwoFactorNotEnabled = new("Auth.TwoFactorNotEnabled", "Two-factor authentication is not enabled for this user.");
+    public static readonly Error UnauthorizedRole = new("Auth.UnauthorizedRole", "Access is restricted to administrators and managers only.");
 }

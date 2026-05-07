@@ -6,4 +6,4 @@ using System.Threading.Tasks;
 
 namespace Application.Registration;
 
-public sealed record RegisterResponse(string AccessToken, string RefreshToken);
+public sealed record RegisterResponse(string Message);

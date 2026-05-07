@@ -16,6 +16,7 @@ public class GroupController(IMediator mediator) : ControllerBase
 {
     private readonly IMediator _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
 
+    [AllowAnonymous]
     [HttpGet]
     public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
     {
@@ -23,6 +24,7 @@ public class GroupController(IMediator mediator) : ControllerBase
         return result.ToActionResult();
     }
 
+    [AllowAnonymous]
     [HttpGet("{groupPublicId:guid}/standings")]
     public async Task<IActionResult> GetStandings([FromRoute] Guid groupPublicId, CancellationToken cancellationToken)
     {

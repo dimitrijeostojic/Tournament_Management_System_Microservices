@@ -36,6 +36,11 @@ public sealed class LoginRequestHandler(
         }
 
         var roles = await _userManager.GetRolesAsync(user);
+        if (!roles.Contains(Core.Roles.Admin) && !roles.Contains(Core.Roles.Manager))
+        {
+            return Result<LoginResponse>.Failure(ApplicationErrors.UnauthorizedRole);
+        }
+
         var accessToken = await _jwtTokenRepository.GenerateTokenAsync(user, roles);
         var refreshToken = Domain.Entities.RefreshToken.Create(user.Id);
         await _refreshTokenRepository.AddAsync(refreshToken, cancellationToken);

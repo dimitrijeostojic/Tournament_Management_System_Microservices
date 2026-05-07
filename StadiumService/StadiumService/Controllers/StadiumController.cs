@@ -20,6 +20,7 @@ public class StadiumController : ControllerBase
         _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
     }
 
+    [AllowAnonymous]
     [HttpGet]
     public async Task<IActionResult> GetAllStadiums(CancellationToken cancellationToken)
     {
@@ -27,6 +28,7 @@ public class StadiumController : ControllerBase
         return result.ToActionResult();
     }
 
+    [AllowAnonymous]
     [HttpGet("{publicId:guid}")]
     public async Task<IActionResult> GetByPublicId(Guid publicId, CancellationToken cancellationToken)
     {

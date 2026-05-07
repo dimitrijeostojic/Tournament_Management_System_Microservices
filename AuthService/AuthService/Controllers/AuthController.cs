@@ -25,6 +25,7 @@ public class AuthController(IMediator mediator) : ControllerBase
         return result.ToActionResult();
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpPost("register")]
     public async Task<IActionResult> Register(RegisterRequest request, CancellationToken cancellationToken)
     {
