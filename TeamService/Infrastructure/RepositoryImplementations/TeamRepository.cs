@@ -22,7 +22,7 @@ public sealed class TeamRepository(ApplicationDbContext context)
 
     public async Task<List<Team>> GetAllAsync(CancellationToken cancellationToken = default)
     {
-        return await _context.Teams.ToListAsync(cancellationToken);
+        return await _context.Teams.Include(t => t.Group).ToListAsync(cancellationToken);
     }
 
     public async Task<List<Team>> GetByGroupPublicIdAsync(Guid groupPublicId, CancellationToken cancellationToken = default)
