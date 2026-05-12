@@ -70,7 +70,7 @@ public sealed class KnockoutBracket : Entity
                 AdvanceFromSemifinal(completed.MatchOrder, winnerId, winnerName, loserId, loserName);
                 break;
 
-            // Final i ThirdPlace nemaju napredovanje
+                // Final i ThirdPlace nemaju napredovanje
         }
     }
 
@@ -104,6 +104,5 @@ public sealed class KnockoutBracket : Entity
         }
     }
 
-    private KnockoutMatch GetMatch(KnockoutRound round, int matchOrder)
-        => _matches.First(m => m.Round == round && m.MatchOrder == matchOrder);
+    private KnockoutMatch GetMatch(KnockoutRound round, int matchOrder) => _matches.First(m => m.Round == round && m.MatchOrder == matchOrder);
 }

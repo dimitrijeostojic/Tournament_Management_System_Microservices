@@ -20,6 +20,9 @@ public sealed class GroupRepository(ApplicationDbContext context)
         _context.Groups.Remove(group);
     }
 
+    public async Task<int> CountAsync(CancellationToken cancellationToken = default)
+        => await _context.Groups.CountAsync(cancellationToken);
+
     public async Task<List<Group>> GetAllAsync(CancellationToken cancellationToken = default)
         => await _context.Groups.Include(x => x.Teams).ToListAsync(cancellationToken);
 
