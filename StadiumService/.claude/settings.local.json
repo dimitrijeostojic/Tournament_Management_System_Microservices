@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(Get-ChildItem -Path \"C:\\\\Users\\\\DimitrijeOstojic\\\\Desktop\\\\Dimitrije\\\\Master\\\\IzabranaPoglavljaInformacionihSistema\\\\IzabranaPoglavljaInformacionihSistemaBack\\\\StadiumService\" -Recurse -Filter \"*.csproj\")",
+      "Bash(Select-Object -ExpandProperty FullName)",
+      "Bash(Remove-Item *)"
+    ]
+  }
+}

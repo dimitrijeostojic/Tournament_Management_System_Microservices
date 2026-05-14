@@ -1,23 +1,17 @@
-﻿using Domain.Entities;
-using Infrastructure.Options;
+using Domain.Entities;
+using Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using MongoDB.Driver;
 
 namespace Infrastructure.Seed;
 
 public sealed class StadiumSeeder(
-    IOptions<MongoDbOptions> options,
+    MongoDbContext context,
     ILogger<StadiumSeeder> logger)
 {
     public async Task SeedAsync()
     {
-        var client = new MongoClient(options.Value.ConnectionString);
-        var database = client.GetDatabase(options.Value.DatabaseName);
-        var collection = database.GetCollection<Stadium>(options.Value.CollectionName);
-
-        var count = await collection.CountDocumentsAsync(_ => true);
-        if (count > 0)
+        if (await context.Stadiums.AnyAsync())
         {
             logger.LogInformation("Stadiums already seeded, skipping.");
             return;
@@ -35,7 +29,8 @@ public sealed class StadiumSeeder(
             Stadium.Create("Stadium 974", "Doha", 44089)
         };
 
-        await collection.InsertManyAsync(stadiums);
+        context.Stadiums.AddRange(stadiums);
+        await context.SaveChangesAsync();
         logger.LogInformation("Seeded {Count} stadiums.", stadiums.Count);
     }
 }

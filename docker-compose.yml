@@ -92,7 +92,6 @@ services:
       - ASPNETCORE_ENVIRONMENT=Production
       - MongoDb__ConnectionString=mongodb://mongodb:27017
       - MongoDb__DatabaseName=StadiumDB
-      - MongoDb__CollectionName=stadiums
       - Jwt__SecretKey=KG+8eq3WYLLKv26GTW5S+q6BQvaPefH/yMmMNwCYMzo=
       - Jwt__Issuer=TournamentPlatform
       - Jwt__Audience=TournamentPlatform

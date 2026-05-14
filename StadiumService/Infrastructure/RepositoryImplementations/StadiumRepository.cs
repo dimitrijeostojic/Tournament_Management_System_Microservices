@@ -1,35 +1,22 @@
-﻿using Domain.Entities;
+using Domain.Entities;
 using Domain.RepositoryInterfaces;
-using Infrastructure.Options;
-using Microsoft.Extensions.Options;
-using MongoDB.Driver;
+using Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
-namespace Infrastracture.RepositoryImplementations;
+namespace Infrastructure.RepositoryImplementations;
 
-public sealed class StadiumRepository : IStadiumRepository
+public sealed class StadiumRepository(MongoDbContext context) : IStadiumRepository
 {
-
-    private readonly IMongoCollection<Stadium> _collection;
-
-    public StadiumRepository(IOptions<MongoDbOptions> options)
-    {
-        var client = new MongoClient(options.Value.ConnectionString);
-        var database = client.GetDatabase(options.Value.DatabaseName);
-        _collection = database.GetCollection<Stadium>(options.Value.CollectionName);
-    }
-
+    private readonly MongoDbContext _context = context ?? throw new ArgumentNullException(nameof(context));
 
     public async Task<List<Stadium>> GetAllStadiumsAsync(CancellationToken cancellationToken)
     {
-        return await _collection
-          .Find(_ => true)
-          .ToListAsync(cancellationToken);
+        return await _context.Stadiums.ToListAsync(cancellationToken);
     }
 
     public async Task<Stadium?> GetByPublicIdAsync(Guid stadiumPublicId, CancellationToken cancellationToken)
     {
-        return await _collection
-            .Find(s => s.PublicId == stadiumPublicId)
-            .FirstOrDefaultAsync(cancellationToken);
+        return await _context.Stadiums
+            .FirstOrDefaultAsync(s => s.PublicId == stadiumPublicId, cancellationToken);
     }
 }
