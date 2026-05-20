@@ -38,6 +38,12 @@ public class AuthDbContext(DbContextOptions<AuthDbContext> options) : IdentityDb
             };
 
         builder.Entity<IdentityRole>().HasData(roles);
+
+        builder.Entity<RefreshToken>()
+            .HasOne(r => r.User)
+            .WithMany()
+            .HasForeignKey(r => r.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
     }
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
